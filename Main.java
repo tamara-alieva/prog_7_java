@@ -33,6 +33,73 @@ public class Main {
         System.out.println("--------------------------------------------------------------------------------------------------\n");
     }
 
+    public static void search(List<Person> list, Person element) {
+        int n = list.size(); int i, count = 0;
+        String element_type = element.getType();
+        String list_type, buffer = ""; boolean flag = true;
+        System.out.print("Результат поиска: ");
+        for (i = 0; i < n; i++)
+        {
+            flag = true;
+            list_type = list.get(i).getType();
+            if (element_type == list_type)
+            {
+                if (element.getName() != "")
+                {
+                    flag = (element.getName() == list.get(i).getName()) && (element.getBalance() == list.get(i).getBalance());
+                }
+                else
+                {
+                    flag = element.getBalance() == list.get(i).getBalance();
+                }
+
+                if (element_type == "Driver")
+                {
+                    Driver list_driver = (Driver)list.get(i);
+                    Driver element_driver = (Driver)element;
+                    flag = flag && (list_driver.getExperience() == element_driver.getExperience() && list_driver.getOrderAmount() == element_driver.getOrderAmount());
+                }
+                if (element_type == "Passenger")
+                {
+                    Passenger list_pass = (Passenger)list.get(i);
+                    Passenger element_pass = (Passenger)element;
+                    flag = flag && (list_pass.getMethod() == element_pass.getMethod());
+                }
+                if (flag)
+                {
+                    count++;
+                    if (count == 1) 
+                    {
+                        System.out.println("\n--------------------------------------------------------------------------------------------------");
+                        System.out.printf("| %-15s%-15s%-14s%-15s%-15s%-20s |\n", "Тип", "Имя", "Баланс", "Опыт", "Заказы", "Метод оплаты");
+                        System.out.println("--------------------------------------------------------------------------------------------------");
+                    }
+                    if (list.get(i).getType() == "Person") {
+                        System.out.printf("| %-15s%-15s%-14s%-15s%-15s%-21s|\n", "Человек", list.get(i).getName(), list.get(i).getBalance(), "-", "-", "-");
+                    }
+                    if (list.get(i).getType() == "Driver") {
+                        Driver driver = (Driver) list.get(i);
+                        System.out.printf("| %-15s%-15s%-14s%-15s%-15s%-21s|\n", "Водитель", driver.getName(), driver.getBalance(), driver.getExperience(), driver.getOrderAmount(), "-");
+                    }
+                    if (list.get(i).getType() == "Passenger") {
+                        Passenger pass = (Passenger) list.get(i);
+                        if (pass.getMethod()) buffer = "Банковская карта";
+                        else buffer = "Наличные";
+                        System.out.printf("| %-15s%-15s%-14s%-15s%-15s%-21s|\n", "Пассажир", pass.getName(), pass.getBalance(), "-", "-", buffer);
+                    }
+                }
+            }
+        }
+        if (count > 0)
+        {
+            System.out.println("--------------------------------------------------------------------------------------------------\n");
+        }
+        else
+        {
+            System.out.println("совпадения не найдены\n");
+        }
+    }
+
     public static void main(String[] args) {
         System.out.println("ТЕСТЫ:");
         Scanner scanner = new Scanner(System.in);
@@ -96,8 +163,27 @@ public class Main {
         System.out.println("Сортировка по возрастанию:");
         list_output(list);
 
+        // Сортировка по убыванию
         Collections.reverse(list);
         System.out.println("Сортировка по убыванию:");
         list_output(list);
+
+        // Поиск 1
+        Passenger search1 = new Passenger(6000);
+        Person person = (Person)search1;
+        search(list, person);
+
+        // Поиск 2
+        Driver search2 = new Driver("Сергей", 6000, 7, 350);
+        person = (Person)search2;
+        search(list, person);
+
+        // Поиск 3
+        Person search3 = new Person("Кирилл", 8000);
+        search(list, search3);
+
+        // Поиск 4
+        Person search4 = new Person(100000);
+        search(list, search4);
     }
 }
