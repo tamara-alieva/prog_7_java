@@ -6,24 +6,28 @@ public class Driver extends Person {
 
     public Driver() {
         super();
+        type = "Driver";
         this.experience = 0;
         this.orderAmount = 0;
     }
 
     public Driver(String name) {
         super(name);
+        type = "Driver";
         this.experience = 0;
         this.orderAmount = 0;
     }
 
     public Driver(int balance) {
         super(balance);
+        type = "Driver";
         this.experience = 0;
         this.orderAmount = 0;
     }
 
     public Driver(String name, int balance, int experience, int orderAmount) {
         super(name, balance);
+        type = "Driver";
         this.experience = experience;
         this.orderAmount = orderAmount;
     }

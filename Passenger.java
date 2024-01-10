@@ -6,21 +6,25 @@ public class Passenger extends Person {
 
     public Passenger() {
         super();
+        type = "Passenger";
         this.payment_method = false;
     }
 
     public Passenger(String name) {
         super(name);
+        type = "Passenger";
         this.payment_method = false;
     }
 
     public Passenger(int balance) {
         super(balance);
+        type = "Passenger";
         this.payment_method = false;
     }
 
     public Passenger(String name, int balance, boolean method) {
         super(name, balance);
+        type = "Passenger";
         this.payment_method = method;
     }
 

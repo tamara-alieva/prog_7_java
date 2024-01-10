@@ -1,25 +1,30 @@
 import java.util.Scanner;
 
 public class Person implements Participant {
+    protected String type;
     protected String name;
     protected int balance;
 
     public Person() {
+        type = "Person";
         this.name = "";
         this.balance = 0;
     }
 
     public Person(String name) {
+        type = "Person";
         this.name = name;
         this.balance = 0;
     }
 
     public Person(int balance) {
+        type = "Person";
         this.name = "";
         this.balance = balance;
     }
 
     public Person(String name, int balance) {
+        type = "Person";
         this.name = name;
         this.balance = balance;
     }
@@ -35,6 +40,10 @@ public class Person implements Participant {
     public void setInfo(String name, int balance) {
         this.name = name;
         this.balance = balance;
+    }
+
+    public String getType() {
+        return this.type;
     }
 
     public String getName() {
