@@ -1,67 +1,57 @@
 import java.util.Scanner;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
+
+    public static void list_output(List<Object> list) {
+        int n = list.size(); String buffer;
+        System.out.println("--------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-15s%-15s%-14s%-15s%-20s%-15s |\n", "Type", "Name", "Balance", "Experince", "Order Amount", "Method");
+        System.out.println("--------------------------------------------------------------------------------------------------");
+        int i;
+        Person pers;
+        for (i = 0; i < n; i++) {
+            pers = (Person) list.get(i);
+            if (pers.getType() == "Person") {
+                System.out.printf("| %-15s%-15s%-14s%-15s%-20s%-16s|\n", "Person", pers.getName(), pers.getBalance(), "-", "-", "-");
+            }
+            if (pers.getType() == "Driver") {
+                Driver driver = (Driver) list.get(i);
+                System.out.printf("| %-15s%-15s%-14s%-15s%-20s%-16s|\n", "Driver", driver.getName(), driver.getBalance(), driver.getExperience(), driver.getOrderAmount(), "-");
+            }
+            if (pers.getType() == "Passenger") {
+                Passenger pass = (Passenger) list.get(i);
+                if (pass.getMethod()) buffer = "Credit Card";
+                else buffer = "Cash";
+                System.out.printf("| %-15s%-15s%-14s%-15s%-20s%-16s|\n", "Driver", pass.getName(), pass.getBalance(), "-", "-", buffer);
+            }
+        }
+        System.out.println("--------------------------------------------------------------------------------------------------\n");
+    }
+
+    //boolean ascending_compare(P)
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("ТЕСТЫ:");
-        System.out.println("1) Перегруженный метод setInfo(...) в классе Passenger (с вызовом метода класса Person)");
-        Passenger passenger1 = new Passenger();
-        passenger1.setInfo("Иван", 5000, false);
-        System.out.println(passenger1);
+        List<Object> list = new ArrayList<Object>();
+        list.add(new Passenger("Anna", 6000, true));
+        list.add(new Passenger("Irina", 6000, false));
+        list.add(new Driver("Ivan", 7000, 10, 600));
+        list.add(new Driver("Sergey", 6000, 7, 350));
+        list.add(new Passenger("Yuriy", 8000, true));
+        list.add(new Driver("Ivan", 7000, 10, 560));
+        list.add(new Passenger("Kirill", 6000, false));
+        list.add(new Person("Kirill", 8000));
+        list.add(new Passenger("Yuriy", 5000, true));
+        list.add(new Person("Andrey", 5000));
+        list.add(new Driver("Sergey", 6000, 7, 350));
+        list.add(new Person("Elena", 5500));
+        list.add(new Passenger("Anna", 6000, false));
+        list.add(new Person("Andrey", 3000));
+        list.add(new Driver("Dmitriy", 1000, 5, 120));
+        list.add(new Driver("Sergey", 4000, 7, 340));
 
-        System.out.println("2) Перегруженный метод setInfo(...) в классе Driver (без вызова метода класса Person)");
-        Driver driver1 = new Driver();
-        driver1.setInfo("Леонид", 8700, 14, 390);
-        System.out.println(driver1);
-
-        System.out.println("3) Вызов конструктора базового класса из конструктора производного класса");
-        Passenger passenger2 = new Passenger("Георгий", 5000, true);
-        System.out.println(passenger2);
-
-        System.out.println("4) Абстрактный класс Engine -> класс Car");
-        Car car1 = new Car("Volvo", true);
-        System.out.println("getBrand(): " + car1.getBrand());
-
-        System.out.println("\n5) Интерфейс Participant и его метод input()");
-        Fuel fuel1 = new Fuel();
-        fuel1.input();
-
-        /*
-        System.out.println("\n6) Мелкое клонирование");
-        try {
-            Car<Integer> car_original1 = new Car(12345, "Toyota", false);
-            Car<Integer> car_copy1 = car_original1.clone();
-            car_copy1.fuel.fill();
-            System.out.println("Оригинальный объект:");
-            System.out.println(car_original1);
-            System.out.println(car_original1.fuel);
-            System.out.println("\nОбъект-клон:");
-            System.out.println(car_copy1);
-            System.out.println(car_copy1.fuel);
-        }
-        catch (CloneNotSupportedException e) {
-            System.out.println("Не применён интерфейс Cloneable!");
-        }
-        */
-
-        System.out.println("\n7) Глубокое клонирование");
-        try {
-            Car<Integer> car_original2 = new Car(12345, "Toyota", false);
-            Car<Integer> car_copy2 = car_original2.clone();
-            car_copy2.fuel.fill();
-            System.out.println("Оригинальный объект:");
-            System.out.println(car_original2);
-            System.out.println(car_original2.fuel);
-            System.out.println("\nОбъект-клон:");
-            System.out.println(car_copy2);
-            System.out.println(car_copy2.fuel);
-        }
-        catch (CloneNotSupportedException e) {
-            System.out.println("Не применён интерфейс Cloneable!");
-        }
-        
-        System.out.println("\n8) Шаблон класса Car");
-        Car<Integer> car2 = new Car(12345, "Volkswagen", true);
-        System.out.println(car2);
+        list_output(list);
     }
 }
